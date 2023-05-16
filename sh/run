@@ -1,4 +1,4 @@
 #!/bin/bash
 
 mvn -T 8C clean install -DskipTests=true && clear
-docker cp target/kc_spi.jar keycloak-cloud-container:/opt/keycloak/providers/
+#docker cp target/kc_spi.jar keycloak-cloud-container:/opt/keycloak/providers/
