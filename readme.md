@@ -28,7 +28,6 @@ password : test
 ```bash
 $ curl -X "POST" "https://localhost:8443/realms/test/protocol/openid-connect/token" \
      -H 'Content-Type: application/x-www-form-urlencoded' \
-     -H 'X-Kaller-Device-Id: 0eb4a126-cd3c-45b4-9e27-9c886ef37ce7' \
      -H 'User-Agent: KC-Rest/0.0.1 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 iOS/9B206 KC-Rest/0.0.1' \
      --data-urlencode "client_id=test-client" \
      --data-urlencode "client_secret=eucQDUfNCRhf0g05eKg1fvBmfQTI3awu" \
