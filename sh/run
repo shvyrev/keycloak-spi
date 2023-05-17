@@ -1,4 +1,22 @@
 #!/bin/bash
 
+IMAGE_NAME=kc-rest-image;
+CONTAINER_NAME=kc-rest-container;
+EXTERNAL_PORT=8443;
+INTERNAL_PORT=8443;
+
 mvn -T 8C clean install -DskipTests=true && clear
-#docker cp target/kc_spi.jar keycloak-cloud-container:/opt/keycloak/providers/
+
+docker stop $CONTAINER_NAME
+docker rm $CONTAINER_NAME
+docker rmi $IMAGE_NAME
+
+docker build -f docker/Dockerfile -t $IMAGE_NAME .
+
+docker run --name $CONTAINER_NAME -d -p $EXTERNAL_PORT:$INTERNAL_PORT \
+        -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin \
+        -v ${PWD}/export:/opt/keycloak/data/import \
+        $IMAGE_NAME \
+        start-dev --import-realm --log-level="DEBUG"
+
+docker restart $CONTAINER_NAME
