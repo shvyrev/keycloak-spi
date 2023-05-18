@@ -7,6 +7,8 @@ The following software is required to work with the Debezium codebase and build 
 * [Docker Engine](https://docs.docker.com/engine/install/) or [Docker Desktop](https://docs.docker.com/desktop/) 1.9 or later
 * [Apache Maven](https://maven.apache.org/index.html) 3.8.4 or later  
   (or invoke the wrapper with `./mvnw` for Maven commands)
+* [CURL](https://curl.se/) 7.79.1 or later
+* [JQ](https://stedolan.github.io/jq/) 1.6 or later
 
 See the links above for installation instructions on your platform. You can verify the versions are installed and running:
 
@@ -14,6 +16,8 @@ See the links above for installation instructions on your platform. You can veri
     $ javac -version
     $ mvn -version
     $ docker --version
+    $ curl --version
+    $ jq --version
 
 
 ## Описание
@@ -22,22 +26,20 @@ See the links above for installation instructions on your platform. You can veri
 
 ## Тестирование
 
-### Сборка и запуск контейнера
-Для тестирования необходимо собрать проект :
+### Сборка и запуск проекта
+Для тестирования необходимо собрать проект и запустить проект в Docker:
 ```bash
 $ chmod +x sh/run
 $ sh/run
 ```
 
 В результате запустится контейнер `Docker`.
+В Realm `test` будет добавлен пользователь с параметрами:
 
-### Добавление пользователя
-Контейнер будет содержать realm - `Test`. В этот realm нужно будет добавить пользователя.
-Для примера добавим пользователя у которого :
-```properties
-username : test
-password : test
-```
+      username : test
+      password : test
+
+## Тестирование 
 
 ### Получение токена пользователя
 

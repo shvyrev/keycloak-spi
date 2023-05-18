@@ -1,0 +1,30 @@
+#!/bin/bash
+
+curl -k --retry 999 --retry-connrefused --retry-all-errors --retry-max-time 0 "https://localhost:8443"
+
+# Get admin access token
+ACCESS_TOKEN=$(curl -kX "POST" "https://localhost:8443/realms/master/protocol/openid-connect/token" \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+     --data-urlencode "username=admin" \
+     --data-urlencode "password=admin" \
+     --data-urlencode "grant_type=password" \
+     --data-urlencode "client_id=admin-cli" | jq -r .access_token)
+
+# Create user
+curl -kX "POST" "https://localhost:8443/admin/realms/test/users" \
+     -H 'Content-Type: application/json' \
+     -H 'Authorization: Bearer '"${ACCESS_TOKEN}"'' \
+     -d $'{
+  "firstName": "test",
+  "lastName": "test",
+  "username": "test",
+  "email": "test@test.com",
+  "enabled": "true",
+  "credentials": [
+    {
+      "type": "password",
+      "value": "test",
+      "temporary": false
+    }
+  ]
+}'

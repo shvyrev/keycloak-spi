@@ -5,18 +5,28 @@ CONTAINER_NAME=kc-rest-container;
 EXTERNAL_PORT=8443;
 INTERNAL_PORT=8443;
 
+# Build provider
 mvn -T 8C clean install -DskipTests=true && clear
 
+# Clean docker containers
 docker stop $CONTAINER_NAME
 docker rm $CONTAINER_NAME
 docker rmi $IMAGE_NAME
 
+# Build docker image from Dockerfile
 docker build -f docker/Dockerfile -t $IMAGE_NAME .
 
+# Run container and import predefined realm `Test`
 docker run --name $CONTAINER_NAME -d -p $EXTERNAL_PORT:$INTERNAL_PORT \
         -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin \
         -v ${PWD}/export:/opt/keycloak/data/import \
         $IMAGE_NAME \
-        start-dev --import-realm --log-level="DEBUG"
+        start-dev --import-realm
+#        start-dev --import-realm --log-level="DEBUG"
 
+# Restart container to apply imported properties
 docker restart $CONTAINER_NAME
+
+# Run script to add mock user
+chmod +x sh/adduser
+sh/adduser
