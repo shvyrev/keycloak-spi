@@ -1,6 +1,6 @@
 ## Requirements
 
-The following software is required to work with the Debezium codebase and build it locally:
+The following software is required to work with codebase and build it locally:
 
 * [Git](https://git-scm.com) 2.2.1 or later
 * JDK 17 or later, e.g. [OpenJDK](http://openjdk.java.net/projects/jdk/)
